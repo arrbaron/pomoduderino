@@ -2,7 +2,10 @@ import React from 'react';
 
 const Display = props => {
   return (
-    <p>Display</p>
+    <div className='display'>
+      <p>Display</p>
+      <p>{props.time}</p>
+    </div>
   );
 };
 

@@ -1,7 +1,8 @@
 const initialState = {
-  title: 'Welcome to React Redux',
-  intro: 'To get started, edit src/App.js and save to reload.',
-  count: 0
+  time: {
+    minutes: 15,
+    seconds: 0
+  }
 };
 
 const reducer = (state=initialState, action) => {
