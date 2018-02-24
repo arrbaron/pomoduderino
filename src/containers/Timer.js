@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 import Display from '../components/Display';
 import Controls from '../components/Controls';
 
@@ -50,8 +49,4 @@ class Timer extends Component {
   }
 }
 
-const mapStateToProps = state => ({
-  time: state.reducer.time
-});
-
-export default connect(mapStateToProps)(Timer);
+export default Timer;
