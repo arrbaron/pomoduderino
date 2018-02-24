@@ -5,7 +5,7 @@ import QuoteImage from '../components/QuoteImage';
 class Quote extends Component {
   render() {
     return (
-      <section className='Quote'>
+      <section className="Quote">
         <QuoteText />
         <QuoteImage />
       </section>

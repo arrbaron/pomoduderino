@@ -9,15 +9,15 @@ class App extends Component {
   
   render() {
     return (
-      <div className='App'>
-        <header role='banner'>
+      <div className="App">
+        <header role="banner">
           <Header />
         </header>
-        <main role='main'>
+        <main role="main">
           <Timer />
           <Quote />
         </main>
-        <footer role='contentinfo'>
+        <footer role="contentinfo">
           <Footer />
         </footer>
       </div>

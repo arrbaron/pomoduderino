@@ -9,11 +9,13 @@ class Timer extends Component {
       minutes: 15,
       seconds: 0,
       timeDisplay: '15 : 00',
+      ticking: false
     };
-    const intervalId = null;
 
     this.startTimer = this.startTimer.bind(this);
     this.stopTimer = this.stopTimer.bind(this);
+    this.pauseTimer = this.pauseTimer.bind(this);
+    this.setTimer = this.setTimer.bind(this);
   }
   
   startTimer() {
@@ -26,7 +28,7 @@ class Timer extends Component {
         });
       }
       this.setState({ seconds: this.state.seconds - 1});
-      this.formatTime();
+      this.formatTime(this.state.minutes, this.state.seconds);
     }, 1000)
   }
 
@@ -34,26 +36,49 @@ class Timer extends Component {
     this.setState({
       minutes: 15,
       seconds: 0,
-      timeDisplay: '15 : 00'
+      timeDisplay: '15 : 00',
+      ticking: false
     });
     clearInterval(this.intervalId);
   }
 
-  formatTime() {
-    let seconds = parseInt(this.state.seconds, 10);
-    let minutes = parseInt(this.state.minutes, 10);
+  pauseTimer() {
+    this.setState({ ticking: false });
+    clearInterval(this.intervalId);
+  }
+
+  setTimer(e) {
+    e.preventDefault();
+    const minutes = e.target.minutes.value;
+    const seconds = e.target.seconds.value;
+
+    this.setState({
+      minutes,
+      seconds
+    });
+    this.formatTime(minutes, seconds);
+    // this.formatTime(this.state.minutes, this.state.seconds);
+  }
+
+  formatTime(numMinutes, numSeconds) {
+    let seconds = parseInt(numSeconds, 10);
+    let minutes = parseInt(numMinutes, 10);
 
     if (seconds < 10) seconds = '0' + seconds;
     if (minutes < 10) minutes = '0' + minutes;
     
-    this.setState({ timeDisplay: `${minutes} : ${seconds}`});
+    console.log(`minutes: ${minutes}, seconds: ${seconds}`);
+    this.setState({ timeDisplay: `${minutes} : ${seconds}` });
   }
 
   render() {
     return (
       <section className='timer'>
         <Display time={this.state.timeDisplay} />
-        <Controls start={this.startTimer} stop={this.stopTimer}/>
+        <Controls 
+          start={this.startTimer} stop={this.stopTimer} pause={this.pauseTimer} set={this.setTimer}
+          minutes={this.state.minutes} seconds={this.state.seconds}
+        />
       </section>
     );
   }
