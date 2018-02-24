@@ -8,21 +8,35 @@ class Timer extends Component {
     this.state = {
       minutes: 15,
       seconds: 0,
-      timeDisplay: ''
-    }
+      timeDisplay: '15 : 00',
+    };
+    const intervalId = null;
+
+    this.startTimer = this.startTimer.bind(this);
+    this.stopTimer = this.stopTimer.bind(this);
   }
   
   startTimer() {
-    setInterval(() => {
+    this.intervalId = setInterval(() => {
       if (this.state.seconds <= 0) {
         this.setState({
           seconds: 60,
-          minutes: this.state.minutes - 1
-        })
+          minutes: this.state.minutes - 1,
+          ticking: true
+        });
       }
       this.setState({ seconds: this.state.seconds - 1});
       this.formatTime();
     }, 1000)
+  }
+
+  stopTimer() {
+    this.setState({
+      minutes: 15,
+      seconds: 0,
+      timeDisplay: '15 : 00'
+    });
+    clearInterval(this.intervalId);
   }
 
   formatTime() {
@@ -35,15 +49,11 @@ class Timer extends Component {
     this.setState({ timeDisplay: `${minutes} : ${seconds}`});
   }
 
-  componentDidMount() {
-    this.startTimer();
-  }
-  
   render() {
     return (
       <section className='timer'>
         <Display time={this.state.timeDisplay} />
-        <Controls />
+        <Controls start={this.startTimer} stop={this.stopTimer}/>
       </section>
     );
   }
