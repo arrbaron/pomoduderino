@@ -23,11 +23,13 @@ class Timer extends Component {
       if (this.state.seconds <= 0) {
         this.setState({
           seconds: 60,
-          minutes: this.state.minutes - 1,
-          ticking: true
+          minutes: this.state.minutes - 1
         });
       }
-      this.setState({ seconds: this.state.seconds - 1});
+      this.setState({
+         seconds: this.state.seconds - 1,
+         ticking: true
+        });
       this.formatTime(this.state.minutes, this.state.seconds);
     }, 1000)
   }
@@ -73,11 +75,11 @@ class Timer extends Component {
 
   render() {
     return (
-      <section className='timer'>
+      <section className="timer">
         <Display time={this.state.timeDisplay} />
         <Controls 
           start={this.startTimer} stop={this.stopTimer} pause={this.pauseTimer} set={this.setTimer}
-          minutes={this.state.minutes} seconds={this.state.seconds}
+          minutes={this.state.minutes} seconds={this.state.seconds} ticking={this.state.ticking}
         />
       </section>
     );
