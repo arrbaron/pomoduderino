@@ -17,7 +17,6 @@ class Timer extends Component {
     this.pauseTimer = this.pauseTimer.bind(this);
     this.setTimer = this.setTimer.bind(this);
   }
-  
   startTimer() {
     this.intervalId = setInterval(() => {
       if (this.state.seconds <= 0) {
@@ -27,11 +26,11 @@ class Timer extends Component {
         });
       }
       this.setState({
-         seconds: this.state.seconds - 1,
-         ticking: true
-        });
+        seconds: this.state.seconds - 1,
+        ticking: true
+      });
       this.formatTime(this.state.minutes, this.state.seconds);
-    }, 1000)
+    }, 1000);
   }
 
   stopTimer() {
@@ -66,8 +65,8 @@ class Timer extends Component {
     let seconds = parseInt(numSeconds, 10);
     let minutes = parseInt(numMinutes, 10);
 
-    if (seconds < 10) seconds = '0' + seconds;
-    if (minutes < 10) minutes = '0' + minutes;
+    if (seconds < 10) seconds = `0${seconds}`;
+    if (minutes < 10) minutes = `0${minutes}`;
     
     console.log(`minutes: ${minutes}, seconds: ${seconds}`);
     this.setState({ timeDisplay: `${minutes} : ${seconds}` });
