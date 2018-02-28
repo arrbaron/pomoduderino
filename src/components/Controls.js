@@ -1,6 +1,17 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 const Controls = props => {
+  Controls.propTypes = {
+    ticking: PropTypes.bool.isRequired,
+    start: PropTypes.func.isRequired,
+    stop: PropTypes.func.isRequired,
+    pause: PropTypes.func.isRequired,
+    set: PropTypes.func.isRequired,
+    minutes: PropTypes.number.isRequired,
+    seconds: PropTypes.number.isRequired,
+  };
+
   let playButtons = null;
 
   if (props.ticking) {
