@@ -29,16 +29,15 @@ describe('<Timer />', () => {
     wrapper.instance().pauseTimer();
   });
 
-  // it('Calls setTimer()', () => {
-  //   const wrapper = mount(<Timer />);
-
-  //   const event = jest.fn();
-  //   wrapper.instance().setTimer();
-  // });
-
-  it('Updates timeDisplay state on formatTime()', () => {
+  it('Updates minutes state on setMinutes()', () => {
     const wrapper = shallow(<Timer />);
-    wrapper.instance().formatTime(20, 20);
-    expect(wrapper.state('timeDisplay')).toEqual('20 : 20');
+    wrapper.instance().setMinutes(20);
+    expect(wrapper.state('minutes')).toEqual(20);
+  });
+
+  it('Updates seconds state on setSeconds()', () => {
+    const wrapper = shallow(<Timer />);
+    wrapper.instance().setSeconds(20);
+    expect(wrapper.state('seconds')).toEqual(20);
   });
 });
