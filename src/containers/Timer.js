@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import Display from '../components/Display';
 import Controls from '../components/Controls';
 
 class Timer extends Component {
@@ -8,14 +7,14 @@ class Timer extends Component {
     this.state = {
       minutes: 15,
       seconds: 0,
-      timeDisplay: '15 : 00',
       ticking: false
     };
 
     this.startTimer = this.startTimer.bind(this);
     this.stopTimer = this.stopTimer.bind(this);
     this.pauseTimer = this.pauseTimer.bind(this);
-    this.setTimer = this.setTimer.bind(this);
+    this.setMinutes = this.setMinutes.bind(this);
+    this.setSeconds = this.setSeconds.bind(this);
   }
   startTimer() {
     this.intervalId = setInterval(() => {
@@ -37,7 +36,6 @@ class Timer extends Component {
     this.setState({
       minutes: 15,
       seconds: 0,
-      timeDisplay: '15 : 00',
       ticking: false
     });
     clearInterval(this.intervalId);
@@ -48,17 +46,16 @@ class Timer extends Component {
     clearInterval(this.intervalId);
   }
 
-  setTimer(e) {
-    e.preventDefault();
-    const minutes = e.target.minutes.value;
-    const seconds = e.target.seconds.value;
+  setMinutes(mins) {
+    let minutes = mins;
+    if (minutes < 10) minutes = `0${minutes}`;
+    this.setState({ minutes });
+  }
 
-    this.setState({
-      minutes,
-      seconds
-    });
-    this.formatTime(minutes, seconds);
-    // this.formatTime(this.state.minutes, this.state.seconds);
+  setSeconds(secs) {
+    let seconds = secs;
+    if (seconds > 60) seconds = 60;
+    this.setState({ seconds });
   }
 
   formatTime(numMinutes, numSeconds) {
@@ -68,16 +65,19 @@ class Timer extends Component {
     if (seconds < 10) seconds = `0${seconds}`;
     if (minutes < 10) minutes = `0${minutes}`;
     
-    this.setState({ timeDisplay: `${minutes} : ${seconds}` });
+    this.setState({
+      seconds,
+      minutes
+    });
   }
 
   render() {
     return (
       <section className="timer">
-        <Display time={this.state.timeDisplay} />
         <Controls 
-          start={this.startTimer} stop={this.stopTimer} pause={this.pauseTimer} set={this.setTimer}
+          start={this.startTimer} stop={this.stopTimer} pause={this.pauseTimer}
           minutes={this.state.minutes} seconds={this.state.seconds} ticking={this.state.ticking}
+          setMinutes={this.setMinutes} setSeconds={this.setSeconds}
         />
       </section>
     );
