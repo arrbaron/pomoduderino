@@ -68,7 +68,6 @@ class Timer extends Component {
     if (seconds < 10) seconds = `0${seconds}`;
     if (minutes < 10) minutes = `0${minutes}`;
     
-    console.log(`minutes: ${minutes}, seconds: ${seconds}`);
     this.setState({ timeDisplay: `${minutes} : ${seconds}` });
   }
 
