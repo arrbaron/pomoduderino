@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import Controls from '../components/Controls';
 
-class Timer extends Component {
+class Timer extends Component {  
   constructor() {
     super();
     this.state = {
@@ -28,7 +29,11 @@ class Timer extends Component {
         seconds: this.state.seconds - 1,
         ticking: true
       });
-      this.formatTime(this.state.minutes, this.state.seconds);
+      // this.formatTime(this.state.minutes, this.state.seconds);
+      if (this.state.minutes === 0 && this.state.seconds === 0) {
+        this.props.finishTimer();
+        this.stopTimer();
+      }
     }, 1000);
   }
 
@@ -48,13 +53,15 @@ class Timer extends Component {
 
   setMinutes(mins) {
     let minutes = mins;
-    if (minutes < 10) minutes = `0${minutes}`;
+    // if (minutes < 10) minutes = `0${minutes}`;
+    // if (minutes < 1) minutes = 1;
     this.setState({ minutes });
   }
 
   setSeconds(secs) {
     let seconds = secs;
     if (seconds > 60) seconds = 60;
+    if (seconds < 1) seconds = 0;
     this.setState({ seconds });
   }
 
@@ -83,5 +90,9 @@ class Timer extends Component {
     );
   }
 }
+
+Timer.propTypes = {
+  finishTimer: PropTypes.func.isRequired
+};
 
 export default Timer;
