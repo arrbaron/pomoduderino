@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Controls from '../components/Controls';
+import AudioPlayer from '../components/AudioPlayer';
 
 class Timer extends Component {  
   constructor() {
@@ -8,7 +9,8 @@ class Timer extends Component {
     this.state = {
       minutes: 15,
       seconds: 0,
-      ticking: false
+      ticking: false,
+      playStatus: 'STOPPED'
     };
 
     this.startTimer = this.startTimer.bind(this);
@@ -30,9 +32,8 @@ class Timer extends Component {
         ticking: true
       });
       // this.formatTime(this.state.minutes, this.state.seconds);
-      if (this.state.minutes === 0 && this.state.seconds === 0) {
-        this.props.finishTimer();
-        this.stopTimer();
+      if (this.state.ticking && this.state.minutes === 0 && this.state.seconds === 0) {
+        this.finishTimer();
       }
     }, 1000);
   }
@@ -78,6 +79,12 @@ class Timer extends Component {
     });
   }
 
+  finishTimer() {
+    this.props.finishTimer();
+    this.stopTimer();
+    this.setState({ playStatus: 'PLAYING' });
+  }
+
   render() {
     return (
       <section className="timer">
@@ -86,6 +93,7 @@ class Timer extends Component {
           minutes={this.state.minutes} seconds={this.state.seconds} ticking={this.state.ticking}
           setMinutes={this.setMinutes} setSeconds={this.setSeconds}
         />
+        <AudioPlayer playStatus={this.state.playStatus}/>
       </section>
     );
   }
