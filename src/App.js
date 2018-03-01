@@ -29,11 +29,6 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <audio
-          src="http://developer.mozilla.org/@api/deki/files/2926/=AudioTest_(1).ogg"
-          autoPlay track="test">
-          Your browser does not support the <code>audio</code> element.
-        </audio>
         <header role="banner">
           <Header />
         </header>
