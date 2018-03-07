@@ -5,6 +5,8 @@ const Controls = props => {
   let playButtons = null;
   let inputs = null;
 
+  const checkBlank = value => value === '' ? 0 : parseInt(value, 10);
+
   if (props.status !== 'idle') {
     playButtons =
       <div className="controls__play-buttons">
@@ -26,10 +28,10 @@ const Controls = props => {
 
     inputs = 
       <div className="controls__inputs">
-        <input type="number" name="minutes" min={0} onChange={e => props.setMinutes(parseInt(e.target.value, 10))} value={props.minutes} />
-        <input type="number" name="seconds" min={0} max={60} onChange={e => props.setSeconds(parseInt(e.target.value, 10))} value={props.seconds} />
-        <input type="number" name="resting-minutes" min={0} onChange={e => props.setRestingMinutes(parseInt(e.target.value, 10))} value={props.restingMinutes} />
-        <input type="number" name="resting-seconds" min={0} max={60} onChange={e => props.setRestingSeconds(parseInt(e.target.value, 10))} value={props.restingSeconds} />
+        <input type="number" name="minutes" min={0} onChange={e => props.setMinutes(checkBlank(e.target.value))} value={props.minutes} />
+        <input type="number" name="seconds" min={0} max={60} onChange={e => props.setSeconds(checkBlank(e.target.value))} value={props.seconds} />
+        <input type="number" name="resting-minutes" min={0} onChange={e => props.setRestingMinutes(checkBlank(e.target.value))} value={props.restingMinutes} />
+        <input type="number" name="resting-seconds" min={0} max={60} onChange={e => props.setRestingSeconds(checkBlank(e.target.value))} value={props.restingSeconds} />
       </div>;
   }
 
