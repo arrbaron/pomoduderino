@@ -1,106 +1,119 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Controls from '../components/Controls';
-import AudioPlayer from '../components/AudioPlayer';
+import Display from '../components/Display';
+import done from '../sounds/done.wav';
 
-class Timer extends Component {  
+class Timer extends Component {
   constructor() {
     super();
-    this.state = {
-      minutes: 15,
-      seconds: 0,
-      ticking: false,
-      playStatus: 'STOPPED'
-    };
-
     this.startTimer = this.startTimer.bind(this);
     this.stopTimer = this.stopTimer.bind(this);
     this.pauseTimer = this.pauseTimer.bind(this);
-    this.setMinutes = this.setMinutes.bind(this);
-    this.setSeconds = this.setSeconds.bind(this);
   }
+
   startTimer() {
-    this.intervalId = setInterval(() => {
-      if (this.state.seconds <= 0) {
-        this.setState({
-          seconds: 60,
-          minutes: this.state.minutes - 1
-        });
+    this.props.setStatus('working');
+    this.props.setImage(1);
+    this.tick = setInterval(() => {
+      if (this.props.currentSeconds <= 0) {
+        this.props.setSeconds(60);
+        this.props.setMinutes(this.props.currentMinutes - 1);
       }
-      this.setState({
-        seconds: this.state.seconds - 1,
-        ticking: true
-      });
-      // this.formatTime(this.state.minutes, this.state.seconds);
-      if (this.state.ticking && this.state.minutes === 0 && this.state.seconds === 0) {
-        this.finishTimer();
+      this.props.setSeconds(this.props.currentSeconds - 1);
+      if (this.props.status !== 'idle' && this.props.currentMinutes === 0 && this.props.currentSeconds === 0) {
+        this.timerFinish();
       }
     }, 1000);
   }
 
   stopTimer() {
-    this.setState({
-      minutes: 15,
-      seconds: 0,
-      ticking: false
-    });
-    clearInterval(this.intervalId);
+    this.props.setStatus('idle');
+    this.props.setImage(0);
+    this.props.setMinutes(this.props.workingMinutes);
+    this.props.setSeconds(this.props.workingSeconds);
+    clearInterval(this.tick);
   }
 
   pauseTimer() {
-    this.setState({ ticking: false });
-    clearInterval(this.intervalId);
+    clearInterval(this.tick);
   }
 
-  setMinutes(mins) {
-    let minutes = mins;
-    // if (minutes < 10) minutes = `0${minutes}`;
-    // if (minutes < 1) minutes = 1;
-    this.setState({ minutes });
+  timerFinish() {
+    if (this.props.status === 'working') {
+      this.props.setStatus('resting');
+      this.props.setImage(2);
+      this.props.setMinutes(this.props.restingMinutes);
+      this.props.setSeconds(this.props.restingSeconds);
+    } else if (this.props.status === 'resting') {
+      this.props.setStatus('working');
+      this.props.setImage(1);
+      this.props.setMinutes(this.props.workingMinutes);
+      this.props.setSeconds(this.props.workingSeconds);
+    }
   }
 
-  setSeconds(secs) {
-    let seconds = secs;
-    if (seconds > 60) seconds = 60;
-    if (seconds < 1) seconds = 0;
-    this.setState({ seconds });
-  }
-
-  formatTime(numMinutes, numSeconds) {
-    let seconds = parseInt(numSeconds, 10);
-    let minutes = parseInt(numMinutes, 10);
-
-    if (seconds < 10) seconds = `0${seconds}`;
-    if (minutes < 10) minutes = `0${minutes}`;
-    
-    this.setState({
-      seconds,
-      minutes
-    });
-  }
-
-  finishTimer() {
-    this.props.finishTimer();
-    this.stopTimer();
-    this.setState({ playStatus: 'PLAYING' });
+  // should break out sound logic into its own component
+  playSound(url) {
+    const audio = new Audio(url);
+    audio.play();
   }
 
   render() {
     return (
       <section className="timer">
-        <Controls 
+        <Display minutes={this.props.currentMinutes} seconds={this.props.currentSeconds} />
+        <Controls
           start={this.startTimer} stop={this.stopTimer} pause={this.pauseTimer}
-          minutes={this.state.minutes} seconds={this.state.seconds} ticking={this.state.ticking}
-          setMinutes={this.setMinutes} setSeconds={this.setSeconds}
+          minutes={this.props.currentMinutes} seconds={this.props.currentSeconds} status={this.props.status}
+          workingMinutes={this.props.workingMinutes} workingSeconds={this.props.workingSeconds}
+          restingMinutes={this.props.restingMinutes} restingSeconds={this.props.restingSeconds}
+          setMinutes={this.props.setWorkingMinutes} setSeconds={this.props.setWorkingSeconds} finishWorking={this.finishWorking}
+          setRestingMinutes={this.props.setRestingMinutes} setRestingSeconds={this.props.setRestingSeconds}
         />
-        <AudioPlayer playStatus={this.state.playStatus}/>
       </section>
     );
   }
 }
 
 Timer.propTypes = {
-  finishTimer: PropTypes.func.isRequired
+  setSeconds: PropTypes.func.isRequired,
+  setMinutes: PropTypes.func.isRequired,
+  setWorkingMinutes: PropTypes.func.isRequired,
+  setWorkingSeconds: PropTypes.func.isRequired,
+  setRestingMinutes: PropTypes.func.isRequired,
+  setRestingSeconds: PropTypes.func.isRequired,
+  setStatus: PropTypes.func.isRequired,
+  setImage: PropTypes.func.isRequired,
+  currentMinutes: PropTypes.number.isRequired,
+  currentSeconds: PropTypes.number.isRequired,
+  workingMinutes: PropTypes.number.isRequired,
+  workingSeconds: PropTypes.number.isRequired,
+  restingMinutes: PropTypes.number.isRequired,
+  restingSeconds: PropTypes.number.isRequired,
+  status: PropTypes.string.isRequired
 };
 
-export default Timer;
+const mapDispatchToProps = dispatch => ({
+  setMinutes: minutes => dispatch({ type: 'SET_MINUTES', minutes }),
+  setSeconds: seconds => dispatch({ type: 'SET_SECONDS', seconds }),
+  setWorkingMinutes: minutes => dispatch({ type: 'SET_WORKING_MINUTES', minutes }),
+  setWorkingSeconds: seconds => dispatch({ type: 'SET_WORKING_SECONDS', seconds }),
+  setRestingMinutes: minutes => dispatch({ type: 'SET_RESTING_MINUTES', minutes }),
+  setRestingSeconds: seconds => dispatch({ type: 'SET_RESTING_SECONDS', seconds }),
+  setStatus: status => dispatch({ type: 'SET_STATUS', status }),
+  setImage: image => dispatch({ type: 'SET_IMAGE', image })
+});
+
+const mapStateToProps = state => ({
+  workingMinutes: state.timerReducer.workingMinutes,
+  workingSeconds: state.timerReducer.workingSeconds,
+  restingMinutes: state.timerReducer.restingMinutes,
+  restingSeconds: state.timerReducer.restingSeconds,
+  currentMinutes: state.timerReducer.currentMinutes,
+  currentSeconds: state.timerReducer.currentSeconds,
+  status: state.timerReducer.status
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Timer);

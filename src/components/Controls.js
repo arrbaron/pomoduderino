@@ -5,7 +5,7 @@ const Controls = props => {
   let playButtons = null;
   let inputs = null;
 
-  if (props.ticking) {
+  if (props.status !== 'idle') {
     playButtons =
       <div className="controls__play-buttons">
         <button onClick={() => props.pause()}>Pause</button>
@@ -28,6 +28,8 @@ const Controls = props => {
       <div className="controls__inputs">
         <input type="number" name="minutes" onChange={e => props.setMinutes(parseInt(e.target.value, 10))} value={props.minutes} />
         <input type="number" name="seconds" onChange={e => props.setSeconds(parseInt(e.target.value, 10))} value={props.seconds} />
+        <input type="number" name="resting-minutes" onChange={e => props.setRestingMinutes(parseInt(e.target.value, 10))} value={props.restingMinutes} />
+        <input type="number" name="resting-seconds" onChange={e => props.setRestingSeconds(parseInt(e.target.value, 10))} value={props.restingSeconds} />
       </div>;
   }
 
@@ -39,16 +41,21 @@ const Controls = props => {
   );
 };
 
-
 Controls.propTypes = {
-  ticking: PropTypes.bool.isRequired,
+  status: PropTypes.string.isRequired,
   start: PropTypes.func.isRequired,
   stop: PropTypes.func.isRequired,
   pause: PropTypes.func.isRequired,
   setMinutes: PropTypes.func.isRequired,
   setSeconds: PropTypes.func.isRequired,
+  setRestingMinutes: PropTypes.func.isRequired,
+  setRestingSeconds: PropTypes.func.isRequired,
   minutes: PropTypes.number.isRequired,
   seconds: PropTypes.number.isRequired,
+  workingMinutes: PropTypes.number.isRequired,
+  workingSeconds: PropTypes.number.isRequired,
+  restingMinutes: PropTypes.number.isRequired,
+  restingSeconds: PropTypes.number.isRequired
 };
 
 export default Controls;

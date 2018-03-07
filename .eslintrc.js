@@ -10,6 +10,7 @@ module.exports = {
         "arrow-parens": 0,
         "class-methods-use-this": 0,
         "import/no-extraneous-dependencies": 0,
+        "no-underscore-dangle": 0,
         "react/prefer-stateless-function": 0,
         "react/jsx-max-props-per-line": 0,
         "react/jsx-filename-extension": 0,
