@@ -9,21 +9,28 @@ class App extends Component {
   constructor() {
     super();
     this.state = {
-      status: 'waiting'
+      status: 'idle',
+      message: ''
     };
-    this.finishTimer = this.finishTimer.bind(this);
+    this.setStatus = this.setStatus.bind(this);
+    this.setMessage = this.setMessage.bind(this);
+    this.showNotification = this.showNotification.bind(this);
   }
 
-  finishTimer() {
-    this.setState({ status: 'finished' });
-    const notification = new Notification('Title', {
-      body: 'BEHOLD THE GLORY OF MY NOTIFICATION'
-    });
+  setStatus(status) {
+    this.setState({ status });
   }
-  
-  componentDidMount() {
-    Notification.requestPermission()
-      .then(result => console.log(result));
+
+  setMessage(message) {
+    this.setState({ message });
+  }
+
+  showNotification() {
+    if (typeof Notification !== 'undefined') {
+      const notification = new Notification('Title', {
+        body: this.state.message
+      });
+    }
   }
   
   render() {
@@ -33,8 +40,8 @@ class App extends Component {
           <Header />
         </header>
         <main role="main">
-          <Timer finishTimer={this.finishTimer} />
-          <Quote />
+          <Timer setStatus={this.setStatus} showNotification={this.showNotification} />
+          <Quote status={this.state.status} setMessage={this.setMessage} />
         </main>
         <footer role="contentinfo">
           <Footer />

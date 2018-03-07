@@ -40,4 +40,10 @@ describe('<Timer />', () => {
     wrapper.instance().setSeconds(20);
     expect(wrapper.state('seconds')).toEqual(20);
   });
+
+  it('Calls playSound()', () => {
+    const wrapper = shallow(<Timer />);
+    const testUrl = 'http://developer.mozilla.org/@api/deki/files/2926/=AudioTest_(1).ogg';
+    wrapper.instance().playSound(testUrl);
+  });
 });
