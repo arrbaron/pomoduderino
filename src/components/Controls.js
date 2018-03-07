@@ -26,10 +26,10 @@ const Controls = props => {
 
     inputs = 
       <div className="controls__inputs">
-        <input type="number" name="minutes" onChange={e => props.setMinutes(parseInt(e.target.value, 10))} value={props.minutes} />
-        <input type="number" name="seconds" onChange={e => props.setSeconds(parseInt(e.target.value, 10))} value={props.seconds} />
-        <input type="number" name="resting-minutes" onChange={e => props.setRestingMinutes(parseInt(e.target.value, 10))} value={props.restingMinutes} />
-        <input type="number" name="resting-seconds" onChange={e => props.setRestingSeconds(parseInt(e.target.value, 10))} value={props.restingSeconds} />
+        <input type="number" name="minutes" min={0} onChange={e => props.setMinutes(parseInt(e.target.value, 10))} value={props.minutes} />
+        <input type="number" name="seconds" min={0} max={60} onChange={e => props.setSeconds(parseInt(e.target.value, 10))} value={props.seconds} />
+        <input type="number" name="resting-minutes" min={0} onChange={e => props.setRestingMinutes(parseInt(e.target.value, 10))} value={props.restingMinutes} />
+        <input type="number" name="resting-seconds" min={0} max={60} onChange={e => props.setRestingSeconds(parseInt(e.target.value, 10))} value={props.restingSeconds} />
       </div>;
   }
 
