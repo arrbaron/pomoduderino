@@ -4,7 +4,7 @@ import Timer from './containers/Timer';
 import Quote from './containers/Quote';
 import Alert from './containers/Alert';
 import Footer from './components/Footer';
-import './App.css';
+import './styles/App.css';
 
 class App extends Component {
   render() {
