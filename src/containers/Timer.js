@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Controls from '../components/Controls';
 import Display from '../components/Display';
+import '../styles/Timer.css';
 
 class Timer extends Component {
   constructor() {

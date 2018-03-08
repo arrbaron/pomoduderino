@@ -1,10 +1,18 @@
-section {
-  background: #f5f7f9;
-  border-bottom: 1px solid #d8dee9;
-  border-left: 2px solid #69c;
+html {
+  height: 100%;
 }
 
-h1, h2, strong {
+body {
+  position: relative;
+  min-height: 100%;
+}
+
+section {
+  background: #f5f7f9;
+  height: 350px;
+}
+
+h1, h2, strong, footer {
   color: #333;
 }
 
