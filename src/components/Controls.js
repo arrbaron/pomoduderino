@@ -8,28 +8,46 @@ const Controls = props => {
 
   const checkBlank = value => value === '' ? 0 : parseInt(value, 10);
 
-  if (props.status !== 'idle') {
+  if (props.status === 'idle') {
     playButtons =
       <div className="controls__play-buttons">
-        <button onClick={() => props.pause()}>Pause</button>
+        <button onClick={() => props.start('working')}>Start</button>
         <button onClick={() => props.stop()}>Stop</button>
       </div>;
-
-    // inputs =
-    //   <div className="controls__inputs">
-    //     <label htmlFor="working-minutes">Working minutes</label>
-    //     <input type="number" name="working-minutes" id="working-minutes" disabled value={props.minutes} />
-    //     <label htmlFor="working-seconds">Working seconds</label>
-    //     <input type="number" name="working-seconds" disabled value={props.seconds} />
-    //   </div>;
-  } else {
+  } else if (props.status === 'working' || props.status === 'resting') {
+    playButtons =
+      <div className="controls__play-buttons">
+        <button onClick={() => props.pause(props.status)}>Pause</button>
+        <button onClick={() => props.stop()}>Stop</button>
+      </div>;
+  } else if (props.status === 'paused') {
     playButtons = 
       <div className="controls__play-buttons">
-        <button onClick={() => props.start()}>Start</button>
+        <button onClick={() => props.resume(props.lastStatus)}>Resume</button>
+        <button onClick={() => props.stop()}>Stop</button>
+      </div>;
+  }
+
+  if (props.status === 'working' || props.status === 'resting') {
+    playButtons =
+      <div className="controls__play-buttons">
+        <button onClick={() => props.pause(props.status)}>Pause</button>
+        <button onClick={() => props.stop()}>Stop</button>
+      </div>;
+  } else if (props.status === 'paused') {
+    playButtons =
+      <div className="controls__play-buttons">
+        <button onClick={() => props.resume(props.lastStatus)}>Resume</button>
+        <button onClick={() => props.stop()}>Stop</button>
+      </div>;
+  } else if (props.status === 'idle') {
+    playButtons =
+      <div className="controls__play-buttons">
+        <button onClick={() => props.start('working')}>Start</button>
         <button onClick={() => props.stop()}>Stop</button>
       </div>;
 
-    inputs = 
+    inputs =
       <fieldset name="controls__inputs" className="controls__inputs">
         <legend>Time settings</legend>
         <div className="row">
@@ -62,10 +80,11 @@ const Controls = props => {
 };
 
 Controls.propTypes = {
-  status: PropTypes.string.isRequired,
+  status: PropTypes.oneOf(['idle', 'working', 'resting', 'paused']).isRequired,
   start: PropTypes.func.isRequired,
   stop: PropTypes.func.isRequired,
   pause: PropTypes.func.isRequired,
+  resume: PropTypes.func.isRequired,
   setMinutes: PropTypes.func.isRequired,
   setSeconds: PropTypes.func.isRequired,
   setRestingMinutes: PropTypes.func.isRequired,
@@ -75,7 +94,8 @@ Controls.propTypes = {
   workingMinutes: PropTypes.number.isRequired,
   workingSeconds: PropTypes.number.isRequired,
   restingMinutes: PropTypes.number.isRequired,
-  restingSeconds: PropTypes.number.isRequired
+  restingSeconds: PropTypes.number.isRequired,
+  lastStatus: PropTypes.string.isRequired
 };
 
 export default Controls;
