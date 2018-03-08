@@ -20,7 +20,7 @@ class Quote extends Component {
 
 Quote.propTypes = {
   activeImage: PropTypes.number.isRequired,
-  images: PropTypes.array.isRequired,
+  images: PropTypes.arrayOf(PropTypes.object).isRequired,
   text: PropTypes.string.isRequired
 };
 
