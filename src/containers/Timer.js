@@ -11,10 +11,14 @@ class Timer extends Component {
     this.startTimer = this.startTimer.bind(this);
     this.stopTimer = this.stopTimer.bind(this);
     this.pauseTimer = this.pauseTimer.bind(this);
+    this.resumeTimer = this.resumeTimer.bind(this);
+    this.state = {
+      lastStatus: ''
+    };
   }
 
-  startTimer() {
-    this.props.setStatus('working');
+  startTimer(status) {
+    this.props.setStatus(status);
     this.props.setImage(1);
     this.tick = setInterval(() => {
       if (this.props.currentSeconds <= 0) {
@@ -36,8 +40,15 @@ class Timer extends Component {
     clearInterval(this.tick);
   }
 
-  pauseTimer() {
+  pauseTimer(lastStatus) {
+    console.log(lastStatus);
+    this.setState({ lastStatus });
+    this.props.setStatus('paused');
     clearInterval(this.tick);
+  }
+
+  resumeTimer() {
+    this.startTimer(this.state.lastStatus);
   }
 
   timerFinish() {
@@ -54,23 +65,18 @@ class Timer extends Component {
     }
   }
 
-  // should break out sound logic into its own component
-  playSound(url) {
-    const audio = new Audio(url);
-    audio.play();
-  }
-
   render() {
     return (
       <section className="timer">
         <Display minutes={this.props.currentMinutes} seconds={this.props.currentSeconds} />
         <Controls
-          start={this.startTimer} stop={this.stopTimer} pause={this.pauseTimer}
+          start={this.startTimer} stop={this.stopTimer} pause={this.pauseTimer} resume={this.resumeTimer}
           minutes={this.props.currentMinutes} seconds={this.props.currentSeconds} status={this.props.status}
           workingMinutes={this.props.workingMinutes} workingSeconds={this.props.workingSeconds}
           restingMinutes={this.props.restingMinutes} restingSeconds={this.props.restingSeconds}
           setMinutes={this.props.setWorkingMinutes} setSeconds={this.props.setWorkingSeconds} finishWorking={this.finishWorking}
           setRestingMinutes={this.props.setRestingMinutes} setRestingSeconds={this.props.setRestingSeconds}
+          lastStatus={this.state.lastStatus}
         />
       </section>
     );
