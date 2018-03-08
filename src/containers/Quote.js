@@ -3,11 +3,12 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import QuoteText from '../components/QuoteText';
 import QuoteImage from '../components/QuoteImage';
+import '../styles/Quote.css';
 
 class Quote extends Component {
   render() {
     return (
-      <section className="Quote">
+      <section className="quote">
         <QuoteText text={this.props.text} />
         <QuoteImage 
           imageUrl={this.props.images[this.props.activeImage].url}
