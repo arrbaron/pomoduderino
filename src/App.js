@@ -2,37 +2,11 @@ import React, { Component } from 'react';
 import Header from './components/Header';
 import Timer from './containers/Timer';
 import Quote from './containers/Quote';
+import Alert from './containers/Alert';
 import Footer from './components/Footer';
 import './App.css';
 
 class App extends Component {
-  constructor() {
-    super();
-    this.state = {
-      status: 'idle',
-      message: ''
-    };
-    this.setStatus = this.setStatus.bind(this);
-    this.setMessage = this.setMessage.bind(this);
-    this.showNotification = this.showNotification.bind(this);
-  }
-
-  setStatus(status) {
-    this.setState({ status });
-  }
-
-  setMessage(message) {
-    this.setState({ message });
-  }
-
-  showNotification() {
-    if (typeof Notification !== 'undefined') {
-      const notification = new Notification('Title', {
-        body: this.state.message
-      });
-    }
-  }
-  
   render() {
     return (
       <div className="App">
@@ -40,8 +14,9 @@ class App extends Component {
           <Header />
         </header>
         <main role="main">
-          <Timer setStatus={this.setStatus} showNotification={this.showNotification} />
-          <Quote status={this.state.status} setMessage={this.setMessage} />
+          <Timer />
+          <Quote />
+          <Alert />
         </main>
         <footer role="contentinfo">
           <Footer />
