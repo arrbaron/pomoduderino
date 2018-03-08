@@ -1,0 +1,19 @@
+.controls__inputs {
+  width: 50%;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* .controls__play-buttons {
+  margin-left: auto;
+  margin-right: auto;
+} */
+
+.controls__play-buttons {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+
+
