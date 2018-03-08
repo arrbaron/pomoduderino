@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import done from '../sounds/done.wav';
+import bowling from '../sounds/bowling.wav';
+import abides from '../sounds/abides.wav';
 
 class Alert extends Component {
   componentDidMount() {
@@ -16,18 +17,20 @@ class Alert extends Component {
   }
 
   sendAlert(status) {
+    let audio = null;
+    
     if (status === 'working') {
       const notification = new Notification('HERE WE GO', {
         body: this.props.text
       });
+      audio = new Audio(abides);
     } else if (status === 'resting') {
       const notification = new Notification('Relax, man.', {
         body: this.props.text
       });
+      audio = new Audio(bowling);
     }
-
-    const audio = new Audio(done);
-    audio.play();
+    if (audio) audio.play();
   }
   
   render() {

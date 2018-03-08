@@ -18,8 +18,7 @@ const initialState = {
       alt: 'The Dude relaxing listening to music'
     }
   ],
-  text: 'The world DOES stop and start at your convenience',
-  sound: 'done'
+  text: 'The world DOES stop and start at your convenience'
 };
 
 const alertReducer = (state = initialState, action) => {
