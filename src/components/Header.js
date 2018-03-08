@@ -1,10 +1,10 @@
 import React from 'react';
-import '../styles/_Header.scss';
+import '../styles/Header.css';
 
 const Header = props => (
   <div>
     <h1>Pomoduderino</h1>
-    <p>Welcome to Pomoduderino. A tool for helping you work efficiently but also like, chilling out, man.</p>
+    <h2>The world does not start and stop at your convenience. Until now!</h2>
   </div>
 );
 

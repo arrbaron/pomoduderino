@@ -25,7 +25,7 @@ const initialState = {
 const alertReducer = (state = initialState, action) => {
   switch (action.type) {
     case 'SET_IMAGE':
-      return {  ...state, activeImage: action.image };
+      return { ...state, activeImage: action.image };
     case 'SET_TEXT':
       return { ...state, text: action.text };
     case 'SET_SOUND':
