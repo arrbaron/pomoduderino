@@ -9,7 +9,7 @@ body {
 
 section {
   background: #f5f7f9;
-  height: 350px;
+  height: 20%;
 }
 
 h1, h2, strong, footer {
@@ -21,4 +21,10 @@ h1, h2, strong, footer {
   max-width: 1280px;
   margin-left: auto;
   margin-right: auto; 
+}
+
+@media only screen  and (max-width : 768px) {
+  :root {
+    font-size: 0.75rem;
+  }
 }
