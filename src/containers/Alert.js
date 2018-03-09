@@ -15,22 +15,30 @@ class Alert extends Component {
     }
   }
 
+  onMobile() {
+    if (/Android|webOS|iPhone|iPad|BlackBerry|Windows Phone|Opera Mini|IEMobile|Mobile/i.test(navigator.userAgent)) {
+      return true;
+    }
+    return false;
+  }
+
   sendAlert(status) {
     let audio = null;
     let notification = null;
 
-    if (status === 'working') {
-      notification = new Notification('HERE WE GO', {
-        body: this.props.texts[1]
-      });
-      audio = new Audio(abides);
-    } else if (status === 'resting') {
-      notification = new Notification('Relax, man.', {
-        body: this.props.texts[2]
-      });
-      audio = new Audio(bowling);
+    if (!this.onMobile()) {
+      if (status === 'working') {
+        notification = new Notification('HERE WE GO', {
+          body: this.props.texts[1]
+        });
+        audio = new Audio(abides);
+      } else if (status === 'resting') {
+        notification = new Notification('Relax, man.', {
+          body: this.props.texts[2]
+        });
+        audio = new Audio(bowling);
+      }
     }
-
     if (audio && notification) audio.play();
   }
   
