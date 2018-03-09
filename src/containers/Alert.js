@@ -21,12 +21,12 @@ class Alert extends Component {
     
     if (status === 'working') {
       const notification = new Notification('HERE WE GO', {
-        body: this.props.text
+        body: this.props.texts[1]
       });
       audio = new Audio(abides);
     } else if (status === 'resting') {
       const notification = new Notification('Relax, man.', {
-        body: this.props.text
+        body: this.props.texts[2]
       });
       audio = new Audio(bowling);
     }
@@ -39,13 +39,15 @@ class Alert extends Component {
 }
 
 Alert.propTypes = {
-  text: PropTypes.string.isRequired,
-  status: PropTypes.string.isRequired
+  texts: PropTypes.arrayOf(PropTypes.string).isRequired,
+  status: PropTypes.string.isRequired,
+  activeImage: PropTypes.number.isRequired
 };
 
 const mapStateToProps = state => ({
-  text: state.alertReducer.text,
-  status: state.timerReducer.status
+  texts: state.alertReducer.texts,
+  status: state.timerReducer.status,
+  activeImage: state.alertReducer.activeImage
 });
 
 export default connect(mapStateToProps)(Alert);
