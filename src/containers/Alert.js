@@ -16,10 +16,7 @@ class Alert extends Component {
   }
 
   onMobile() {
-    if (/Android|webOS|iPhone|iPad|BlackBerry|Windows Phone|Opera Mini|IEMobile|Mobile/i.test(navigator.userAgent)) {
-      return true;
-    }
-    return false;
+    return (typeof window.orientation !== 'undefined') || (navigator.userAgent.indexOf('IEMobile') !== -1);
   }
 
   sendAlert(status) {
