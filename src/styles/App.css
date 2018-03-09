@@ -23,10 +23,6 @@ h1, h2, strong, footer {
   margin-right: auto; 
 }
 
-.test {
-  position: absolute;
-}
-
 @media only screen  and (max-width : 768px) {
   :root {
     font-size: 0.75rem;

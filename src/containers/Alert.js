@@ -5,13 +5,6 @@ import bowling from '../sounds/bowling.wav';
 import abides from '../sounds/abides.wav';
 
 class Alert extends Component {
-  constructor() {
-    super();
-    this.state = {
-      orientation: ''
-    };
-  }
-  
   componentDidMount() {
     Notification.requestPermission();
   }
@@ -23,7 +16,7 @@ class Alert extends Component {
   }
 
   onMobile() {
-    return (typeof window.orientation !== 'undefined') || (navigator.userAgent.indexOf('IEMobile') !== -1);
+    return /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
   }
 
   sendAlert(status) {
@@ -44,10 +37,9 @@ class Alert extends Component {
     }
     if (audio && notification) audio.play();
   }
-  
+
   render() {
-    return <div className="test"><h1>Orientation = {typeof window.orientation}</h1></div>;
-    // return null;
+    return null;
   }
 }
 
