@@ -1,11 +1,11 @@
 const initialState = {
   status: 'idle',
-  workingMinutes: 0,
-  workingSeconds: 10,
-  restingMinutes: 0,
-  restingSeconds: 5,
-  currentMinutes: 0,
-  currentSeconds: 10,
+  workingMinutes: 15,
+  workingSeconds: 0,
+  restingMinutes: 5,
+  restingSeconds: 0,
+  currentMinutes: 15,
+  currentSeconds: 0,
 };
 
 const timerReducer = (state = initialState, action) => {

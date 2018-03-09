@@ -9,7 +9,7 @@ class Quote extends Component {
   render() {
     return (
       <section className="quote">
-        <QuoteText text={this.props.text} />
+        <QuoteText text={this.props.texts[this.props.activeImage]} />
         <QuoteImage 
           imageUrl={this.props.images[this.props.activeImage].url}
           imageAlt={this.props.images[this.props.activeImage].alt} 
@@ -22,13 +22,13 @@ class Quote extends Component {
 Quote.propTypes = {
   activeImage: PropTypes.number.isRequired,
   images: PropTypes.arrayOf(PropTypes.object).isRequired,
-  text: PropTypes.string.isRequired
+  texts: PropTypes.arrayOf(PropTypes.string).isRequired
 };
 
 const mapStateToProps = state => ({
   activeImage: state.alertReducer.activeImage,
   images: state.alertReducer.images,
-  text: state.alertReducer.text
+  texts: state.alertReducer.texts
 });
 
 export default connect(mapStateToProps)(Quote);
