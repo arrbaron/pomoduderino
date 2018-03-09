@@ -25,7 +25,6 @@ class Alert extends Component {
   sendAlert(status) {
     let audio = null;
     let notification = null;
-
     if (!this.onMobile()) {
       if (status === 'working') {
         notification = new Notification('HERE WE GO', {
