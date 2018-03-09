@@ -1,10 +1,10 @@
 const initialState = {
   status: 'idle',
-  workingMinutes: 15,
+  workingMinutes: 25,
   workingSeconds: 0,
   restingMinutes: 5,
   restingSeconds: 0,
-  currentMinutes: 15,
+  currentMinutes: 25,
   currentSeconds: 0,
 };
 
