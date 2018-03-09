@@ -29,7 +29,7 @@ class Alert extends Component {
       // });
       audio = new Audio(bowling);
     }
-    if (audio && notification) audio.play();
+    if (audio) audio.play();
   }
 
   render() {
