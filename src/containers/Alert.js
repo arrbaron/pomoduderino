@@ -1,10 +1,17 @@
-import { Component } from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import bowling from '../sounds/bowling.wav';
 import abides from '../sounds/abides.wav';
 
 class Alert extends Component {
+  constructor() {
+    super();
+    this.state = {
+      orientation: ''
+    };
+  }
+  
   componentDidMount() {
     Notification.requestPermission();
   }
@@ -39,7 +46,8 @@ class Alert extends Component {
   }
   
   render() {
-    return null;
+    return <div className="test"><h1>Orientation = {typeof window.orientation}</h1></div>;
+    // return null;
   }
 }
 
